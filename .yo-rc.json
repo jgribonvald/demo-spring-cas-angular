@@ -1,0 +1,19 @@
+{
+  "generator-jhipster": {
+    "baseName": "demo",
+    "packageName": "org.esco.demo.ssc",
+    "packageFolder": "org/esco/demo/ssc",
+    "authenticationType": "session",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": "no",
+    "websocket": "no",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Memory",
+    "prodDatabaseType": "mysql",
+    "useCompass": false,
+    "buildTool": "maven",
+    "frontendBuilder": "grunt",
+    "javaVersion": "7",
+    "rememberMeKey": "4be73e8bf175b3da30596f2cd06c8fe6a65a1866"
+  }
+}
