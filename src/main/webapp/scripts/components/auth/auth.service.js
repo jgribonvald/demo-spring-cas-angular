@@ -9,10 +9,13 @@ angular.module('demoApp')
 
                 AuthServerProvider.login(credentials).then(function (data) {
                     // retrieve the logged account information
-                    Principal.identity(true).then(function(account) {
+                    Principal.identity(true).then(function (account) {
                         // After the login the language will be changed to
                         // the language selected by the user during his registration
                         $translate.use(account.langKey);
+                        deferred.resolve(account);
+                    }).catch(function(err){
+                        deferred.reject(err);
                     });
                     deferred.resolve(data);
 
@@ -26,13 +29,13 @@ angular.module('demoApp')
                 return deferred.promise;
             },
 
-            logout: function () {
+            logout: function (noServerLogout) {
                 AuthServerProvider.logout();
                 Principal.authenticate(null);
             },
 
             authorize: function() {
-                return Principal.identity()
+                return Principal.identity(true)
                     .then(function() {
                         var isAuthenticated = Principal.isAuthenticated();
 

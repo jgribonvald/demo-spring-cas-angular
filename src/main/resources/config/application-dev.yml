@@ -1,23 +1,24 @@
 server:
     port: 8080
+    address: 192.168.45.145
 
 spring:
     profiles:
         active: dev
-    
+
     datasource:
         dataSourceClassName: org.h2.jdbcx.JdbcDataSource
         url: jdbc:h2:mem:jhipster;DB_CLOSE_DELAY=-1
-        databaseName: 
-        serverName: 
-        username: 
-        password: 
+        databaseName:
+        serverName:
+        username:
+        password:
 
     jpa:
         database-platform: org.hibernate.dialect.H2Dialect
         database: H2
         openInView: false
-        show_sql: true
+        show_sql: false
         generate-ddl: false
         hibernate:
             ddl-auto: none
@@ -29,7 +30,7 @@ spring:
             hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
 
     mail:
-        baseUrl: http://localhost:8080
+        baseUrl: http://192.168.45.145:8080
 
     thymeleaf:
         mode: XHTML
@@ -51,3 +52,14 @@ cache:
     timeToLiveSeconds: 3600
     ehcache:
         maxBytesLocalHeap: 16M
+
+app:
+    service:
+        home: http://192.168.45.145:8080/
+        security: http://192.168.45.145:8080/j_spring_cas_security_check
+
+cas:
+    url:
+        prefix: https://test.cas.ent/cas/
+        login: https://test.cas.ent/cas/login
+        logout: https://test.cas.ent/cas/logout

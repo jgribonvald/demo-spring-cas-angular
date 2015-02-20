@@ -1,0 +1,24 @@
+<div ng-cloak>
+    <div class="row">
+        <div class="col-md-12">
+            <h1 translate="protected.title">Welcome, on protected</h1>
+            <p class="lead" translate="protected.subtitle">This is your protected page</p>
+
+            <div ng-switch="isAuthenticated()">
+                <div class="alert alert-success" ng-switch-when="true"
+                     translate="protected.logged.message" translate-values="{username: '{{account.login}}'}">
+                    You are logged in as an authenticated user.
+                </div>
+
+                <div class="alert alert-link" ng-switch-when="true" translate="global.messages.info.filtered" translate-compile="true">
+                    <a ui-sref="filtered">You can test to go on filtered page</a>
+                </div>
+
+                <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.authenticated">
+                    If you want to <a href="#/login">authenticate</a>, you can try the default login="admin".
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

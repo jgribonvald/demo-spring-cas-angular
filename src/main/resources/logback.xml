@@ -28,6 +28,7 @@
 -->
 
     <logger name="org.esco.demo.ssc" level="DEBUG"/>
+    <logger name="org.springframework.security.cas.web" level="DEBUG"/>
 
     <logger name="javax.activation" level="WARN"/>
     <logger name="javax.mail" level="WARN"/>

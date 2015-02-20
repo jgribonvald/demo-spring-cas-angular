@@ -17,6 +17,12 @@
                         <span translate="global.menu.home">Home</span>
                     </a>
                 </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="protected">
+                        <span class="glyphicon glyphicon-lock"></span>
+                        <span translate="global.menu.protected">Protected area</span>
+                    </a>
+                </li>
                 <li ui-sref-active="active" ng-switch-when="true" class="dropdown pointer">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="">
                                 <span>
@@ -44,17 +50,18 @@
                     <ul class="dropdown-menu">
                         <li ui-sref-active="active" ng-switch-when="true"><a ui-sref="settings"><span class="glyphicon glyphicon-wrench"></span>
                             &#xA0;<span translate="global.menu.account.settings">Settings</span></a></li>
-                        <li ui-sref-active="active" ng-switch-when="true"><a ui-sref="password"><span class="glyphicon glyphicon-lock"></span>
-                            &#xA0;<span translate="global.menu.account.password">Password</span></a></li>
+                        <!--<li ui-sref-active="active" ng-switch-when="true"><a ui-sref="password"><span class="glyphicon glyphicon-lock"></span>
+                            &#xA0;<span translate="global.menu.account.password">Password</span></a></li>-->
                         <li ui-sref-active="active" ng-switch-when="true"><a ui-sref="sessions"><span class="glyphicon glyphicon-cloud"></span>
                             &#xA0;<span translate="global.menu.account.sessions">Sessions</span></a></li>
                         <li ui-sref-active="active" ng-switch-when="true"><a href="" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span>
                             &#xA0;<span translate="global.menu.account.logout">Log out</span></a></li>
-                        <li ui-sref-active="active" ng-switch-when="false"><a ui-sref="login"><span class="glyphicon glyphicon-log-in"></span>
+                        <li ui-sref-active="active" ng-switch-when="false"><a href="" ng-click="login()"><span class="glyphicon glyphicon-log-in"></span>
                             &#xA0;<span translate="global.menu.account.login">Authenticate</span></a></li>
-
-                        <li ui-sref-active="active" ng-switch-when="false"><a ui-sref="register"><span class="glyphicon glyphicon-plus-sign"></span>
-                            &#xA0;<span translate="global.menu.account.register">Register</span></a></li>
+                        <!--<li ui-sref-active="active" ng-switch-when="false"><a ui-sref="login"><span class="glyphicon glyphicon-log-in"></span>
+                            &#xA0;<span translate="global.menu.account.login">Authenticate</span></a></li>-->
+                        <!--<li ui-sref-active="active" ng-switch-when="false"><a ui-sref="register"><span class="glyphicon glyphicon-plus-sign"></span>
+                            &#xA0;<span translate="global.menu.account.register">Register</span></a></li>-->
                     </ul>
                 </li>
                 <li ng-class="{active: $state.includes('admin')}"  ng-switch-when="true" ng-show="isInRole('ROLE_ADMIN')" class="dropdown pointer">

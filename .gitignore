@@ -11,5 +11,6 @@ node_modules
 .sass-cache
 .DS_Store
 src/main/webapp/dist
+src/main/webapp/bower_components
 .gradle
 build

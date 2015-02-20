@@ -13,16 +13,18 @@ angular.module('demoApp')
                 return _authenticated;
             },
             isInRole: function (role) {
-                if (!_authenticated || !_identity.roles) {
+                if (!_authenticated || !angular.isDefined(_identity) || !_identity.roles) {
                     return false;
                 }
+                console.log("IDENTITY isinrole : " + JSON.stringify(_identity));
 
                 return _identity.roles.indexOf(role) !== -1;
             },
             isInAnyRole: function (roles) {
-                if (!_authenticated || !_identity.roles) {
+                if (!_authenticated || !angular.isDefined(_identity) || !_identity.roles) {
                     return false;
                 }
+                console.log("IDENTITY isinanyrole : " + JSON.stringify(_identity));
 
                 for (var i = 0; i < roles.length; i++) {
                     if (this.isInRole(roles[i])) {
@@ -54,6 +56,7 @@ angular.module('demoApp')
                 // retrieve the identity data from the server, update the identity object, and then resolve.
                 Account.get().$promise
                     .then(function (account) {
+                        console.log("IDENTITY : " + JSON.stringify(account.data));
                         _identity = account.data;
                         _authenticated = true;
                         deferred.resolve(_identity);

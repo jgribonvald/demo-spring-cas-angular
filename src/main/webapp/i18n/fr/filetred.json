@@ -1,0 +1,9 @@
+{
+    "filtered": {
+        "title": "Bienvenue !",
+        "subtitle": "Ceci est une page protégée et filtrée",
+        "logged": {
+            "message": "Vous êtes connecté en tant que \"{{username}}\" avec les roles \"{{role}}\"."
+        }
+    }
+}

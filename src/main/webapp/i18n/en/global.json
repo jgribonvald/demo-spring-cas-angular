@@ -4,6 +4,7 @@
         "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
         "menu": {
             "home": "Home",
+            "protected": "Protected",
             "entities": {
                 "main": "Entities",
                 "additionalEntity": "JHipster will add addtional entities"
@@ -43,7 +44,8 @@
         "messages": {
             "info": {
                 "authenticated": "If you want to <a href=\"#/login\">authenticate</a>, you can try the default accounts:<br/>- Administrator (login=\"admin\" and password=\"admin\") <br/>- User (login=\"user\" and password=\"user\").",
-                "register": "You don't have an account yet? <a href=\"#/register\">Register a new account</a>"
+                "register": "You don't have an account yet? <a href=\"#/register\">Register a new account</a>",
+                "filtered": "<a ui-sref=\"filtered\">You can test to go on filtered page</a>"
             },
             "error": {
                 "dontmatch" : "The password and its confirmation do not match!"

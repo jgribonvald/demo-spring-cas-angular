@@ -49,7 +49,7 @@ import java.util.Arrays;
  * couldn't be cleanly extended.
  * <p/>
  */
-@Service
+//@Service
 public class CustomPersistentRememberMeServices extends
         AbstractRememberMeServices {
 

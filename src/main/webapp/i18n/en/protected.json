@@ -1,0 +1,9 @@
+{
+    "protected": {
+        "title": "Welcome !",
+        "subtitle": "This is your protected page",
+        "logged": {
+            "message": "You are logged in as user \"{{username}}\"."
+        }
+    }
+}

@@ -1,26 +1,24 @@
 'use strict';
 
 angular.module('demoApp')
-    .controller('LoginController', function ($rootScope, $scope, $state, $timeout, Auth) {
+    .controller('LoginController', function ($rootScope, $scope, $state, $q, Auth) {
         $scope.user = {};
         $scope.errors = {};
 
-        $scope.rememberMe = true;
-        $timeout(function (){angular.element('[ng-model="username"]').focus();});
         $scope.login = function () {
-            Auth.login({
-                username: $scope.username,
-                password: $scope.password,
-                rememberMe: $scope.rememberMe
-            }).then(function () {
+            //var deferred = $q.defer;
+            Auth.login().then(function (data) {
                 $scope.authenticationError = false;
-                if ($rootScope.previousStateName === 'register') {
-                    $state.go('home');
+                if (!$rootScope.returnToState) {
+                    $state.transitionTo('home', {}, {reload: true, inherit: false, notify: true});
                 } else {
-                    $rootScope.back();
+                    $state.transitionTo($rootScope.returnToState.name, $rootScope.returnToStateParams, {reload: true, inherit: false, notify: true });
                 }
-            }).catch(function () {
+                //deferred.resolve(data);
+            }).catch(function (err) {
                 $scope.authenticationError = true;
+                //deferred.reject(err);
             });
+            //return deferred.promise;
         };
     });

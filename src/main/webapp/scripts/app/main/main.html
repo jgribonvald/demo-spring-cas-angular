@@ -8,19 +8,27 @@
             <p class="lead" translate="main.subtitle">This is your homepage</p>
 
             <div ng-switch="isAuthenticated()">
-                <div class="alert alert-success" ng-switch-when="true"
+                <div class="alert alert-success" ng-switch-when="true" translate-compile="true"
                      translate="main.logged.message" translate-values="{username: '{{account.login}}'}">
                     You are logged in as user "Admin".
                 </div>
+                <!--<div class="alert alert-success" ng-switch-when="true"
+                     translate="main.logged.message2" translate-compile="true">
+                    You are logged in.
+                </div>-->
 
                 <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.authenticated">
-                    If you want to <a href="#/login">authenticate</a>, you can try the default login="admin" and
-                    password="admin".
+                    If you want to <a href="#/login">authenticate</a>, you can try the default login="admin".
                 </div>
 
-                <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.register">
-                    Don't have an account? <a href=\"#/register\">Register</a>
+                <div class="alert alert-info">
+                    <p>
+                        If you want to test directly filtered accesses :
+                    </p>
+                    <li><a ui-sref="filtered"><span>filtered with automatic login</span></a></li>
+                    <li><a ui-sref="filtered2"><span>filtered with redirect to login page</span></a></li>
                 </div>
+
             </div>
 
             <p translate="main.question">

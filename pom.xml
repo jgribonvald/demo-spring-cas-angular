@@ -328,9 +328,24 @@
             <version>${spring-cloud.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-cas</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>velocity</artifactId>
+                    <groupId>velocity</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>fr.ippon.spark.metrics</groupId>
             <artifactId>metrics-spark-reporter</artifactId>
             <version>${metrics-spark-reporter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.2</version>
         </dependency>
     </dependencies>
     <build>

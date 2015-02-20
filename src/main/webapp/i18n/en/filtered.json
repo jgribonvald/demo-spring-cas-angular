@@ -1,0 +1,9 @@
+{
+    "filtered": {
+        "title": "Welcome !",
+        "subtitle": "This is your protected and filtered page",
+        "logged": {
+            "message": "You are logged in as user \"{{username}}\" with roles \"{{role}}\"."
+        }
+    }
+}

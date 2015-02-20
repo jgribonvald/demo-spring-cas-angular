@@ -61,7 +61,7 @@ public class Application {
             "Local: \t\thttp://127.0.0.1:{}\n\t" +
             "External: \thttp://{}:{}\n----------------------------------------------------------",
             env.getProperty("server.port"),
-            InetAddress.getLocalHost().getHostAddress(),
+            env.getProperty("server.address"),
             env.getProperty("server.port"));
 
     }

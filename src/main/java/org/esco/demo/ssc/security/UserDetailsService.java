@@ -5,8 +5,10 @@ import org.esco.demo.ssc.domain.User;
 import org.esco.demo.ssc.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
@@ -20,7 +22,7 @@ import java.util.Collection;
  * Authenticate a user from the database.
  */
 @Component("userDetailsService")
-public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
+public class UserDetailsService implements AuthenticationUserDetailsService<CasAssertionAuthenticationToken> {
 
     private final Logger log = LoggerFactory.getLogger(UserDetailsService.class);
 
@@ -29,9 +31,11 @@ public class UserDetailsService implements org.springframework.security.core.use
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(final String login) {
-        log.debug("Authenticating {}", login);
+    public UserDetails loadUserDetails(CasAssertionAuthenticationToken token) throws UsernameNotFoundException {
+        String login = token.getPrincipal().toString();
         String lowercaseLogin = login.toLowerCase();
+        log.debug("Authenticating {}", login);
+
         User userFromDatabase = userRepository.findOneByLogin(lowercaseLogin);
         if (userFromDatabase == null) {
             throw new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the database");
@@ -44,7 +48,6 @@ public class UserDetailsService implements org.springframework.security.core.use
             GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(authority.getName());
             grantedAuthorities.add(grantedAuthority);
         }
-        return new org.springframework.security.core.userdetails.User(lowercaseLogin,
-            userFromDatabase.getPassword(), grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(lowercaseLogin,lowercaseLogin, grantedAuthorities);
     }
 }

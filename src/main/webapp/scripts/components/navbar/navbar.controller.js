@@ -10,4 +10,9 @@ angular.module('demoApp')
             Auth.logout();
             $state.go('home');
         };
+
+        $scope.login = function () {
+            Auth.login();
+            $state.go('home');
+        };
     });

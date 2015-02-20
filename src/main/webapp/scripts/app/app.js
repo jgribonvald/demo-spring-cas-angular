@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('demoApp', ['LocalStorageModule', 'tmh.dynamicLocale',
-    'ngResource', 'ui.router', 'ngCookies', 'pascalprecht.translate', 'ngCacheBuster'])
+    'ngResource', 'ui.router', 'ngCookies', 'pascalprecht.translate', 'ngCacheBuster','ui.bootstrap'])
 
     .run(function ($rootScope, $location, $window, $http, $state, $translate, Auth, Principal, Language, ENV, VERSION) {
         $rootScope.ENV = ENV;
@@ -9,6 +9,19 @@ angular.module('demoApp', ['LocalStorageModule', 'tmh.dynamicLocale',
         $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
             $rootScope.toState = toState;
             $rootScope.toStateParams = toStateParams;
+
+            var requireLogin = toState.data.requireLogin;
+
+            if (requireLogin && !Principal.isAuthenticated() && !$rootScope.modalOpened ) {
+                event.preventDefault();
+
+                Auth.login().then(function () {
+                        return $state.transitionTo(toState.name, toStateParams, {reload: true});
+                    })
+                    .catch(function () {
+                        return $state.transitionTo('home', {}, {reload: true});
+                    });
+            }
 
             if (Principal.isIdentityResolved()) {
                 Auth.authorize();
@@ -34,6 +47,7 @@ angular.module('demoApp', ['LocalStorageModule', 'tmh.dynamicLocale',
                 // Change window title with translated one
                 $window.document.title = title;
             });
+
         });
 
         $rootScope.back = function() {
@@ -45,7 +59,7 @@ angular.module('demoApp', ['LocalStorageModule', 'tmh.dynamicLocale',
             }
         };
     })
-    
+
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $translateProvider, tmhDynamicLocaleProvider, httpRequestInterceptorCacheBusterProvider) {
 
         //enable CSRF
@@ -55,6 +69,42 @@ angular.module('demoApp', ['LocalStorageModule', 'tmh.dynamicLocale',
         //Cache everything except rest api requests
         httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/], true);
 
+        $httpProvider.interceptors.push(function ($timeout, $q, $injector) {
+            var Auth, $http, $state, $rootScope, Principal;
+
+            // this trick must be done so that we don't receive
+            // `Uncaught Error: [$injector:cdep] Circular dependency found`
+            $timeout(function () {
+                Auth = $injector.get('Auth');
+                Principal = $injector.get('Principal');
+                $http = $injector.get('$http');
+                $state = $injector.get('$state');
+                $rootScope = $injector.get('$rootScope');
+            });
+            return {
+                responseError: function (rejection) {
+                    // don't launch auth when request only the account as it's requested at first access
+                    if (rejection.status !== 401 || $rootScope.modalOpened || rejection.data.path === "/api/account" ) {
+                        return $q.reject(rejection);
+                    }
+
+                    var deferred = $q.defer();
+
+                    Principal.authenticate(null);
+                    Auth.login()
+                        .then(function () {
+                            deferred.resolve( $http(rejection.config) );
+                        })
+                        .catch(function () {
+                            $state.go('site');
+                            deferred.reject(rejection);
+                        });
+
+                    return deferred.promise;
+                }
+            };
+         });
+
         $urlRouterProvider.otherwise('/');
         $stateProvider.state('site', {
             'abstract': true,
@@ -63,6 +113,9 @@ angular.module('demoApp', ['LocalStorageModule', 'tmh.dynamicLocale',
                     templateUrl: 'scripts/components/navbar/navbar.html',
                     controller: 'NavbarController'
                 }
+            },
+            data: {
+                requireLogin: false
             },
             resolve: {
                 authorize: ['Auth',
@@ -77,7 +130,7 @@ angular.module('demoApp', ['LocalStorageModule', 'tmh.dynamicLocale',
                 }]
             }
         });
-        
+
 
         // Initialize angular-translate
         $translateProvider.useLoader('$translatePartialLoader', {

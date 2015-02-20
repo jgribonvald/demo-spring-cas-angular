@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * Spring Security success handler, specialized for Ajax requests.
  */
-@Component
+//@Component
 public class AjaxAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     @Override

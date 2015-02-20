@@ -1,0 +1,9 @@
+{
+    "protected": {
+        "title": "Bienvenue !",
+        "subtitle": "Ceci est une page protégée",
+        "logged": {
+            "message": "Vous êtes connecté en tant que \"{{username}}\"."
+        }
+    }
+}

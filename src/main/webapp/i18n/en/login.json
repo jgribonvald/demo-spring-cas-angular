@@ -9,7 +9,8 @@
         },
         "messages": {
             "error": {
-                "authentication": "<strong>Authentication failed!</strong> Please check your credentials and try again."
+                "authentication": "<strong>Authentication failed!</strong> Please check your credentials and try again.",
+                "401": "You must be authenticated to access to this page."
             }
         }
     }

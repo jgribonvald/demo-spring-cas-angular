@@ -31,8 +31,8 @@ public class UserService {
 
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
-    @Inject
-    private PasswordEncoder passwordEncoder;
+//    @Inject
+//    private PasswordEncoder passwordEncoder;
 
     @Inject
     private UserRepository userRepository;
@@ -61,10 +61,10 @@ public class UserService {
         User newUser = new User();
         Authority authority = authorityRepository.findOne("ROLE_USER");
         Set<Authority> authorities = new HashSet<>();
-        String encryptedPassword = passwordEncoder.encode(password);
+        //String encryptedPassword = passwordEncoder.encode(password);
         newUser.setLogin(login);
         // new user gets initially a generated password
-        newUser.setPassword(encryptedPassword);
+        //newUser.setPassword(encryptedPassword);
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
         newUser.setEmail(email);
@@ -89,13 +89,13 @@ public class UserService {
         log.debug("Changed Information for User: {}", currentUser);
     }
 
-    public void changePassword(String password) {
-        User currentUser = userRepository.findOneByLogin(SecurityUtils.getCurrentLogin());
-        String encryptedPassword = passwordEncoder.encode(password);
-        currentUser.setPassword(encryptedPassword);
-        userRepository.save(currentUser);
-        log.debug("Changed password for User: {}", currentUser);
-    }
+//    public void changePassword(String password) {
+//        User currentUser = userRepository.findOneByLogin(SecurityUtils.getCurrentLogin());
+//        String encryptedPassword = passwordEncoder.encode(password);
+//        currentUser.setPassword(encryptedPassword);
+//        userRepository.save(currentUser);
+//        log.debug("Changed password for User: {}", currentUser);
+//    }
 
     @Transactional(readOnly = true)
     public User getUserWithAuthorities() {
