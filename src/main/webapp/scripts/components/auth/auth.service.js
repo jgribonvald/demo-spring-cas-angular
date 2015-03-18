@@ -35,7 +35,7 @@ angular.module('demoApp')
             },
 
             authorize: function() {
-                return Principal.identity(true)
+                return Principal.identity()
                     .then(function() {
                         var isAuthenticated = Principal.isAuthenticated();
 

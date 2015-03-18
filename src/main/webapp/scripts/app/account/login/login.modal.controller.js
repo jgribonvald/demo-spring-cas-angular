@@ -21,6 +21,7 @@ angular.module('demoApp')
 
             var user = angular.fromJson(m[1]);
             windowOpenCleanup(relogState);
+            Principal.identity(true)
             // use of transitionTO to force reload of pages after login it's needed
             if ($rootScope.returnToState) {
                 $state.transitionTo($rootScope.returnToState, $rootScope.returnToStateParams, {reload: true});
