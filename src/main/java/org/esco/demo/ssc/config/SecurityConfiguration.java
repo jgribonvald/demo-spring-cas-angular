@@ -48,8 +48,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Inject
     private Environment env;
 
-//    @Inject
-//    private AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler;
+    @Inject
+    private AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler;
 
     @Inject
     private AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler;
@@ -79,13 +79,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return sp;
     }
 
-    @Bean
-    public SimpleUrlAuthenticationSuccessHandler authenticationSuccessHandler() {
-        SimpleUrlAuthenticationSuccessHandler authenticationSuccessHandler = new SimpleUrlAuthenticationSuccessHandler();
-        authenticationSuccessHandler.setDefaultTargetUrl("/");
-        authenticationSuccessHandler.setTargetUrlParameter("spring-security-redirect");
-        return authenticationSuccessHandler;
-    }
+//    @Bean
+//    public SimpleUrlAuthenticationSuccessHandler authenticationSuccessHandler() {
+//        SimpleUrlAuthenticationSuccessHandler authenticationSuccessHandler = new SimpleUrlAuthenticationSuccessHandler();
+//        authenticationSuccessHandler.setDefaultTargetUrl("/");
+//        authenticationSuccessHandler.setTargetUrlParameter("spring-security-redirect");
+//        return authenticationSuccessHandler;
+//    }
 
     @Bean
     public RememberCasAuthenticationProvider casAuthenticationProvider() {
@@ -122,7 +122,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         casAuthenticationFilter.setAuthenticationDetailsSource(new RememberWebAuthenticationDetailsSource());
         casAuthenticationFilter.setSessionAuthenticationStrategy(sessionStrategy());
         casAuthenticationFilter.setAuthenticationFailureHandler(ajaxAuthenticationFailureHandler);
-        casAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
+        casAuthenticationFilter.setAuthenticationSuccessHandler(ajaxAuthenticationSuccessHandler);
+        // casAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
         // casAuthenticationFilter.setRequiresAuthenticationRequestMatcher(new
         // AntPathRequestMatcher("/login", "GET"));
         return casAuthenticationFilter;
