@@ -2,7 +2,6 @@ package org.esco.demo.ssc.config;
 
 import org.esco.demo.ssc.security.*;
 import org.esco.demo.ssc.web.filter.CsrfCookieGeneratorFilter;
-import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.validation.Cas20ServiceTicketValidator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -133,8 +132,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public SingleSignOutFilter singleSignOutFilter() {
-        SingleSignOutFilter singleSignOutFilter = new SingleSignOutFilter();
+    public CustomSingleSignOutFilter singleSignOutFilter() {
+        CustomSingleSignOutFilter singleSignOutFilter = new CustomSingleSignOutFilter();
         singleSignOutFilter.setCasServerUrlPrefix(env.getRequiredProperty(CAS_URL_PREFIX));
         return singleSignOutFilter;
     }
@@ -192,16 +191,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/api/logout")
                 .logoutSuccessHandler(ajaxLogoutSuccessHandler)
-            .invalidateHttpSession(true)
-            .deleteCookies("JSESSIONID")
-            .permitAll()
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll()
             .and()
-            .headers()
-            .frameOptions()
-            .disable()
-            .authorizeRequests()
-            .antMatchers("/app/**").authenticated()
-            .antMatchers("/api/register").permitAll()
+                .headers()
+                .frameOptions()
+                .disable()
+                .authorizeRequests()
+                .antMatchers("/app/**").authenticated()
+                .antMatchers("/api/register").permitAll()
                 .antMatchers("/api/activate").permitAll()
                 .antMatchers("/api/authenticate").authenticated()
                 .antMatchers("/api/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
