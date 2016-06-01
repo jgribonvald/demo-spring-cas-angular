@@ -4,11 +4,9 @@ import org.esco.demo.ssc.security.*;
 import org.esco.demo.ssc.web.filter.CsrfCookieGeneratorFilter;
 import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.validation.Cas20ServiceTicketValidator;
-import org.jasig.cas.client.validation.Saml11TicketValidator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-
 import org.springframework.security.cas.ServiceProperties;
 import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
 import org.springframework.security.cas.web.CasAuthenticationFilter;
@@ -20,11 +18,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.RememberMeServices;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
@@ -99,7 +92,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public SessionAuthenticationStrategy sessionStrategy() {
-        SessionFixationProtectionStrategy sessionStrategy = new SessionFixationProtectionStrategy();
+        SessionFixationProtectionStrategy sessionStrategy = new CustomSessionFixationProtectionStrategy();
         sessionStrategy.setMigrateSessionAttributes(false);
         // sessionStrategy.setRetainedAttributes(Arrays.asList("CALLBACKURL"));
         return sessionStrategy;
